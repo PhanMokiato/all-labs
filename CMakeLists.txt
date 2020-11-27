@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(test7)
+project(test6)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -11,6 +11,6 @@ include_directories(src)
 
 file(GLOB tests "test/*.cpp")
 
-add_executable(test7 ${tests})
+add_executable(test6 ${tests})
 #add_executable(test6 main.cpp)
-target_link_libraries(test7 src gtest gtest_main)
+target_link_libraries(test6 src gtest gtest_main)
