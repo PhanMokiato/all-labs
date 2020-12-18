@@ -38,7 +38,7 @@ public:
   return top == -1;
   }
 
-  bool IsFull(){
+  bool IsFull() const {
   return top == capacity - 1;
   }
 
@@ -75,7 +75,8 @@ void PrintStack_A () {
   return arr[elem - 1];
   }
 
-    friend void operator<<(const Stack_A<T> &st,const T &value);
+  template<typename T>
+  friend void operator<<(Stack_A<T> &st,const T &value);
 
   T operator>>(Stack_A &stack){
   if (IsEmpty())
@@ -157,7 +158,7 @@ void PrintStack_A () {
 //
 
 template <typename T>
-void operator<<(const Stack_A<T> &st,const T &value) {
+void operator<<(Stack_A<T> &st,const T &value) {
   if (st.IsFull())
   {
     std::cout << "There is too much elements." << std::endl;
