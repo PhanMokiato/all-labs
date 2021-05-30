@@ -1,0 +1,5 @@
+﻿  GameOfLife.cpp
+G:\All examples\example 1\GameOfLife\GameOfLife.cpp(477,15): warning C4244: =: преобразование "WPARAM" в "int", возможна потеря данных
+G:\All examples\example 1\GameOfLife\GameOfLife.cpp(304): warning C4715: GetCol: значение возвращается не при всех путях выполнения
+G:\All examples\example 1\GameOfLife\GameOfLife.cpp(315): warning C4715: GetRow: значение возвращается не при всех путях выполнения
+  GameOfLife.vcxproj -> G:\All examples\example 1\x64\Debug\GameOfLife.exe
