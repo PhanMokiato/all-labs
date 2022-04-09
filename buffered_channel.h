@@ -41,17 +41,17 @@ class BufferedChannel {
   BufferedChannel() : _buffer_size(10) {}
 
   void Send(T value) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
     std::unique_lock<std::mutex> locker(_mutex);
     try {
       if (_closed) {
         throwException();
       }
-      while(!_closed) {
-        _our_cv.wait(locker, [&]() { return _values.size() < _buffer_size; });
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        std::cout << "We are adding " << value << std::endl;
-        _values.push(value);
-      }
+        if (!_closed) {
+          _our_cv.wait(locker, [&]() { return _values.size() < _buffer_size; });
+          std::cout << "We are adding " << value << std::endl;
+          _values.push(value);
+        }
     } catch (std::runtime_error &error) {
       std::cout << error.what() << std::endl;
     }
@@ -62,14 +62,15 @@ class BufferedChannel {
   }
 
   std::pair<T, bool> Recv() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     std::unique_lock<std::mutex> locker(_mutex);
     if (_closed && _values.empty()) {
-      return std::make_pair(0, _closed);
+      T default_value;
+      return std::make_pair(default_value, _closed);
     }
     _our_cv.wait(locker, [&]() { return !_values.empty(); });
     T value = _values.front();
     _values.pop();
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
     std::cout << "We are deleting " << value << std::endl;
     return std::make_pair(value, _closed);
   }
