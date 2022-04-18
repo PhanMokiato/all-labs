@@ -31,6 +31,7 @@ int main() {
     }
   }
 
+  auto start = chrono::high_resolution_clock::now();
   vector<vector<double>> C(n);
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
@@ -43,14 +44,16 @@ int main() {
     }
     cout << endl;
   }
-
+  auto finish = chrono::high_resolution_clock::now();
+  chrono::duration<double> period = finish - start;
+  cout << period.count() << " seconds" << endl;
 
   vector<vector<double>> C1(n);
   for (int i = 0; i < n; ++i) {
     C1[i].resize(m);
   }
 
-  auto start = chrono::high_resolution_clock::now();
+  start = chrono::high_resolution_clock::now();
   thread* current;
   for (int i = 0; i < threads; ++i) {
       current = new thread([&](){
@@ -63,8 +66,8 @@ int main() {
       });
       current->join();
   }
-  auto finish = chrono::high_resolution_clock::now();
-  chrono::duration<double> period = finish - start;
+  finish = chrono::high_resolution_clock::now();
+  period = finish - start;
 
   cout << endl;
   for (int i = 0; i < n; ++i) {
